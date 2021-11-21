@@ -1,0 +1,10 @@
+Список актуальных команд: 
+!help
+!clear
+!kick неактив|user_id
+!all
+!votekick user_id
+!admin add|remove user_id
+!admin list
+!show secure|active|unactive
+!secure links|invites|bots|nude enable|disable
