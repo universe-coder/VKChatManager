@@ -156,6 +156,43 @@ class Routes extends Controller {
                     else
                         $this->check_messages->access_denied = true;
 
+                }elseif ($this->findCommand($this->commands->nick_add)) {
+
+                    if ($this->check_messages->access->is_admin) {
+
+                        if (isset($this->data->object->reply_message->from_id)) {
+
+                            $manager->nick_add($this->data->object->reply_message->from_id, $this->mess);
+
+                        }else {
+
+                            $arr_parms = explode(" ", $this->mess);
+                            $manager->nick_add($arr_parms[0], $arr_parms[1]);
+
+                        }
+                            
+
+                    }else {
+                        $this->check_messages->access_denied = true;
+                    }
+
+                }elseif ($this->findCommand($this->commands->nick_remove)) {
+
+                    if ($this->check_messages->access->is_admin) {
+
+                        if (isset($this->data->object->reply_message->from_id))
+                            $manager->nick_remove($this->data->object->reply_message->from_id);
+                        else
+                            $manager->nick_remove($this->mess);
+
+                    }else {
+                        $this->check_messages->access_denied = true;
+                    }
+
+                }elseif ($this->findCommand($this->commands->nick_list)) {
+
+                    $manager->nick_list();
+
                 }else {
 
                     $secure_module = false;

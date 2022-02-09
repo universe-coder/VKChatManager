@@ -17,6 +17,9 @@ $commands = (object) [
     'secure_bots'       => "!secure bots",
     'secure'            => "!secure",
     'enable'            => "enable",
-    'disable'           => "disable"
+    'disable'           => "disable",
+    'nick_add'          => "!nick add",
+    'nick_remove'       => "!nick remove",
+    'nick_list'         => "!nick list"
 ];
 ?>

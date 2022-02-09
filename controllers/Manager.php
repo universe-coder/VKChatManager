@@ -34,7 +34,7 @@ class Manager extends Controller {
 
     public function help (): void {
 
-        $help_text = file_get_contents('./help.txt', true);
+        $help_text = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/help.txt', true);
 
         if ($help_text) {
 
@@ -432,6 +432,127 @@ class Manager extends Controller {
 
     }
 
+    public function nick_remove ($user_id) {
+
+        $user_id = $this->screen_name_parse($user_id);
+
+        if (isset($user_id)) {
+            
+            $user_id = $this->search_user_in_chat($user_id);
+
+            if ($user_id != 0) {
+                
+                $this->db->delete(
+                    'users_nick',
+                    'user_id=:user_id AND chat_id=:chat_id',
+                    [
+                        "user_id" => $user_id, 
+                        "chat_id" => $this->chat->local_id
+                    ], 1
+                );
+                $message_text = $this->from_profile_reply . $this->messages->removed_nick;
+                
+            }else {
+
+                $message_text = $this->from_profile_reply . $this->messages->cannot_find_user;
+
+            }
+            
+            $this->vk->send_message($message_text, $this->data_new_message);
+            
+        }
+
+    }
+
+    public function nick_add ($user_id, $nick) {
+        
+        $user_id = $this->screen_name_parse($user_id);
+
+        if (isset($user_id)) {
+            
+            $user_id = $this->search_user_in_chat($user_id);
+
+            if ($user_id != 0) {
+                
+                $check_nick = $this->db->select(
+                    'users_nick', 'COUNT(*)',
+                    'chat_id=:chat_id AND user_id=:user_id',
+                    [
+                        "chat_id" => $this->chat->local_id, 
+                        "user_id" => $user_id
+                    ], 1
+                )[0][0];
+
+                if ($check_nick) {
+
+                    $this->db->update(
+                        'users_nick',
+                        'nick=:nick, date=:date',
+                        'chat_id=:chat_id AND user_id=:user_id',
+                        [
+                            "nick"    => $nick,
+                            "chat_id" => $this->chat->local_id, 
+                            "user_id" => $user_id,
+                            "date"    => $this->date
+                        ], 1
+                    );
+
+                }else {
+
+                    $this->db->insert(
+                        'users_nick',
+                        '(NULL, :chat_id, :user_id, :nick, :date)',
+                        [
+                            "chat_id" => $this->chat->local_id,
+                            "user_id" => $user_id, 
+                            "nick"    => $nick,
+                            "date"    => $this->date
+                        ]
+                    );
+
+                }
+
+                $message_text = $this->from_profile_reply . $this->messages->added_nick;
+                
+            }else {
+
+                $message_text = $this->from_profile_reply . $this->messages->cannot_find_user;
+
+            }
+            
+            $this->vk->send_message($message_text, $this->data_new_message);
+            
+        }
+
+    }
+
+    public function nick_list () {
+
+        $nicks = $this->db->select(
+            'users_nick', '*',
+            'chat_id=:chat_id',
+            [
+                "chat_id" => $this->chat->local_id
+            ], 0, 0, 'date DESC'
+        );
+
+        $message_text = $this->messages->show_nicks . $this->new_line;
+
+        if ($nicks) {
+
+            for ($i = 0; $i < count($nicks); $i++)
+                $message_text .= ($i+1) . " " . $this->add_adm_in_status($nicks[$i]['user_id'], " ") . "- '" . $nicks[$i]['nick'] . "'";
+
+        }else {
+
+            $message_text .= $this->messages->empty;
+
+        }
+
+        $this->vk->send_message($message_text, $this->data_new_message);
+
+    }
+
     public function show_admins () {
 
         $message = $this->from_profile_reply . $this->messages->list_admins . $this->new_line;
@@ -815,11 +936,11 @@ class Manager extends Controller {
 
     }
 
-    private function add_adm_in_status (int $user_id): string {
+    private function add_adm_in_status (int $user_id, string $end_line = ""): string {
     
+        $end_line = ($end_line) ? $end_line : $this->new_line;
         $info_admin = $this->get_info_user($user_id);
-        
-        return " - @id" . $user_id . " (" . $info_admin->first_name . " " . $info_admin->last_name . ") " . $this->new_line;
+        return " - @id" . $user_id . " (" . $info_admin->first_name . " " . $info_admin->last_name . ") " . $end_line;
         
     }
 

@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 21 2021 г., 15:14
--- Версия сервера: 5.7.20-log
--- Версия PHP: 7.2.0
+-- Время создания: Фев 09 2022 г., 19:20
+-- Версия сервера: 5.7.33
+-- Версия PHP: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -170,6 +169,20 @@ CREATE TABLE `proxy` (
   `date` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users_nick`
+--
+
+CREATE TABLE `users_nick` (
+  `id` int(255) NOT NULL,
+  `chat_id` int(255) NOT NULL,
+  `user_id` int(255) NOT NULL,
+  `nick` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` bigint(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Индексы сохранённых таблиц
 --
@@ -235,6 +248,12 @@ ALTER TABLE `proxy`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `users_nick`
+--
+ALTER TABLE `users_nick`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -296,6 +315,12 @@ ALTER TABLE `message_logs`
 -- AUTO_INCREMENT для таблицы `proxy`
 --
 ALTER TABLE `proxy`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `users_nick`
+--
+ALTER TABLE `users_nick`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

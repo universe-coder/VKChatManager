@@ -8,3 +8,4 @@
 !admin list
 !show secure|active|unactive
 !secure links|invites|bots|nude enable|disable
+!nick add|remove|list
