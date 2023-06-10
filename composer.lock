@@ -1,0 +1,45 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "d3489a8a1c71dde138eff74a1d8d1e08",
+    "packages": [
+        {
+            "name": "bediger4000/nudedetectorphp",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bediger4000/NudeDetectorPHP.git",
+                "reference": "8e50a484e9d7023a938b482579b81085ccab112b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bediger4000/NudeDetectorPHP/zipball/8e50a484e9d7023a938b482579b81085ccab112b",
+                "reference": "8e50a484e9d7023a938b482579b81085ccab112b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3 || ^7.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Dectect images containing nudity some of the time",
+            "support": {
+                "issues": "https://github.com/bediger4000/NudeDetectorPHP/issues",
+                "source": "https://github.com/bediger4000/NudeDetectorPHP/tree/v1.1"
+            },
+            "time": "2016-05-16T03:19:46+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
+}

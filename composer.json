@@ -1,0 +1,9 @@
+{
+    "name": "universe-coder/vkchatmanager",
+    "description": "Chat security for VK",
+    "type": "project",
+    "require": {
+        "bediger4000/nudedetectorphp": "1.1"
+    },
+    "license": "Creative Commons Legal Code"
+}

@@ -140,8 +140,6 @@ class Controller extends Main {
     
     public function check_image_nude (string $url_image): bool {
         
-        include("NudeDetectorPHP-master/NudeDetector.php");
-        
         $detector = new NudeDetector(null, 'YCbCr');  # 'HSV' for alternate skin-color-detection
         $detector->set_file_name($url_image);
         

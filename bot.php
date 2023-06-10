@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
-require_once './controllers/Routes.php';
+require __DIR__ . '/vendor/autoload.php';
+require './controllers/Routes.php';
 
 $data = json_decode(file_get_contents("php://input"));    
 
