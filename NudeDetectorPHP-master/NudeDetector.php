@@ -64,12 +64,12 @@ class NudeDetector {
 	}
 
 	function create_image() {
-
 		$info = getimagesize($this->file_name);
 
 		switch ($info[2]) {
 		case IMAGETYPE_GIF:
-			if (($this->image = imagecreatefromgif($this->file_name)) !== false) {
+			$this->image = imagecreatefromgif($this->file_name);
+			if ($this->image !== false) {
 				imagepalettetotruecolor($this->image);
 			}
 			break;
@@ -83,7 +83,6 @@ class NudeDetector {
 			$this->image = imagecreatefrompng($this->file_name);
 			break;
 		}
-		return;
 	}
 
 	function map_skin_pixels() {
