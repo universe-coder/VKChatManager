@@ -367,78 +367,28 @@ class Controller extends Main {
         
         $minutes -= 60 * $hours_2;
         $seconds = $last_seconds - (60 * $minutes_2);
-        $seconds_title = "секунд";
-        $minutes_title = "минут";
-        $hours_title = "часов";
-        $days_title = "дней";
         $text_timer = "";
         
-        if ($days > 0) {
-            
-            if ($days < 10 || $days > 20) {
-                
-                $last_num = substr($days, (strlen($days) - 1));
-                
-                if ($last_num == 1)
-                    $days_title = "день";
-                elseif ($last_num > 1 && $last_num < 5)
-                    $days_title = "дня";
-                
-            }
-            
-            $text_timer .= $days . " " . $days_title . " ";
-            
-        }
+        if ($days > 0)
+            $text_timer .= $this->declOfNum($days, ['день', 'дня', 'дней']) . " ";
     
-        if ($hours > 0) {
-            
-            if ($hours < 10 || $hours > 20) {
-                
-                $last_num = substr($hours, (strlen($hours) - 1));
-                
-                if ($last_num == 1)
-                    $hours_title = "час";
-                elseif ($last_num > 1 && $last_num < 5)
-                    $hours_title = "часа";
-                
-            }
-            
-            $text_timer .= $hours . " " . $hours_title . " ";
-            
-        }
+        if ($hours > 0)
+            $text_timer .= $this->declOfNum($hours, ['час', 'часа', 'часов']) . " ";
         
-        if ($minutes > 0) {
+        if ($minutes > 0)
+            $text_timer .= $this->declOfNum($minutes, ['минута', 'минуты', 'минут']) . " ";
     
-            if ($minutes < 10 || $minutes > 20) {
-    
-                $last_num = substr($minutes, (strlen($minutes) - 1));
-    
-                if ($last_num == 1)
-                    $minutes_title = "минута";
-                elseif ($last_num > 1 && $last_num < 5)
-                    $minutes_title = "минуты";
-    
-            }
-    
-            $text_timer .= $minutes . " " . $minutes_title . " ";
-    
-        }
-    
-        if ($seconds < 10 || $seconds > 20) {
-    
-            $last_num = substr($seconds, (strlen($seconds) - 1));
-    
-            if ($last_num == 1)
-                $seconds_title = "секунда";
-            elseif ($last_num > 1 && $last_num < 5)
-                $seconds_title = "секунды";
-    
-        }
-    
-        $text_timer .= $seconds . " " . $seconds_title;
+        $text_timer .= $this->declOfNum($seconds, ['секунда', 'секунды', 'секунд']) . " ";
         
         return $text_timer;
         
+    }
+
+    public function declOfNum($num, $titles) {
+
+        $cases = array(2, 0, 1, 1, 1, 2);
+        return $num . " " . $titles[($num % 100 > 4 && $num % 100 < 20) ? 2 : $cases[min($num % 10, 5)]];
+    
     }
 
 }
